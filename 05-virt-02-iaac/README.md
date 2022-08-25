@@ -26,6 +26,16 @@
 - Vagrant
 - Ansible
 
+#### Ответ
+```cmd
+C:\Program Files\Oracle\VirtualBox>VBoxManage -version
+6.1.34r150636
+```
+python3 -m pip install --user https://github.com/ansible/ansible/archive/devel.tar.gz
+
+C:\Program Files\Oracle\VirtualBox>VBoxManage -version
+6.1.34r150636
+
 *Приложить вывод команд установленных версий каждой из программ, оформленный в markdown.*
 
 ## Задача 4 (*)
