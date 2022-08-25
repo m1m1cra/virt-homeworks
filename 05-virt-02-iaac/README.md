@@ -27,18 +27,21 @@
 - Ansible
 
 #### Ответ
-* ```
+* 
+```
 C:\Program Files\Oracle\VirtualBox>VBoxManage -version
 6.1.34r150636
 ```
 
-* ```
+* 
+```
 C:\vagrantcfg> vagrant --version
 Vagrant 2.2.19
 PS C:\vagrantcfg>
 ```
 
-* ```
+* 
+```
 vagrant@vagrant:~$ ansible --version
 [WARNING]: You are running the development version of Ansible. You should only run Ansible from "devel" if you are
 modifying the Ansible engine, or trying out features under development. This is a rapidly changing source of code and
