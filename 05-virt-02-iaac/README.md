@@ -31,13 +31,14 @@
 C:\Program Files\Oracle\VirtualBox>VBoxManage -version
 6.1.34r150636
 ```
-* '''powershell
+* '''ps
 PS C:\vagrantcfg> vagrant --version
 Vagrant 2.2.19
 PS C:\vagrantcfg>
 ```
 
-* vagrant@vagrant:~$ ansible --version
+* ```bash
+vagrant@vagrant:~$ ansible --version
 [WARNING]: You are running the development version of Ansible. You should only run Ansible from "devel" if you are
 modifying the Ansible engine, or trying out features under development. This is a rapidly changing source of code and
 can become unstable at any point.
@@ -50,7 +51,7 @@ ansible [core 2.14.0.dev0]
   python version = 3.10.6 (main, Aug  2 2022, 15:11:28) [GCC 9.4.0] (/usr/bin/python3)
   jinja version = 3.1.2
   libyaml = False
-
+```
 *Приложить вывод команд установленных версий каждой из программ, оформленный в markdown.*
 
 ## Задача 4 (*)
