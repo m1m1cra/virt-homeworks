@@ -31,8 +31,9 @@
 C:\Program Files\Oracle\VirtualBox>VBoxManage -version
 6.1.34r150636
 ```
-* ```ps
-PS C:\vagrantcfg> vagrant --version
+
+* ```cmd
+C:\vagrantcfg> vagrant --version
 Vagrant 2.2.19
 PS C:\vagrantcfg>
 ```
