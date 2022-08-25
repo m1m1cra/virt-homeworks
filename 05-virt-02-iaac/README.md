@@ -31,7 +31,7 @@
 C:\Program Files\Oracle\VirtualBox>VBoxManage -version
 6.1.34r150636
 ```
-* '''ps
+* ```ps
 PS C:\vagrantcfg> vagrant --version
 Vagrant 2.2.19
 PS C:\vagrantcfg>
@@ -52,6 +52,7 @@ ansible [core 2.14.0.dev0]
   jinja version = 3.1.2
   libyaml = False
 ```
+
 *Приложить вывод команд установленных версий каждой из программ, оформленный в markdown.*
 
 ## Задача 4 (*)
