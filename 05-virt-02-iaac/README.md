@@ -148,7 +148,7 @@ Welcome to Ubuntu 20.04.4 LTS (GNU/Linux 5.4.0-110-generic x86_64)
 This system is built by the Bento project by Chef Software
 More information can be found at https://github.com/chef/bento
 Last login: Mon Aug 29 07:32:54 2022 from 10.0.2.2
-<b>vagrant@server1:~$ docker ps</b>
+vagrant@server1:~$ docker ps
 CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
 vagrant@server1:~$
 
