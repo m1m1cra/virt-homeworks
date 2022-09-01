@@ -48,11 +48,14 @@ https://hub.docker.com/repository/docker/m1cra/netology#
 - Gitlab сервер для реализации CI/CD процессов и приватный (закрытый) Docker Registry.
 
 #### Ответ:
-- Так как приложение hi-load, для быстрого горизонтального масштабирования (при необходимости) я бы использовал кубер, или оркестрацию на уровне виртуальных машин, но с кубером более эффективно бы использовались мощности
+- Так как приложение hi-load и монолитное, я бы использовал или виртуалку bare-metal (например, ESXI или KVM, или XEN), естественно, с файловер-нодой в режиме load-balancing, но также, вполне подошло бы и решение в докере, например - в кубере, в целях быстрого горизонтального и вертикального  масштабирования (при необходимости) , более эффективно бы использовались мощности
 - Nodejs веб - аналогично, запустил бы в докере, даже не обязательно строить оркестрацию при этом
-- Мобильное приложение разве лежит не в облаке (в маркете)? 
-- Для Apache Kafka, насколько я ознакомился, используют вполне успешно докер.
-- Elastic 
+- Мобильное приложение разве лежит не в облаке (в маркете)? Не очень понял) 
+- Для Apache Kafka, насколько я ознакомился, используют вполне успешно докер, но можно и поставить на виртуалку bare-metal
+- всю данную связку ELK вполне можно собрать на docker-compose
+- Такой мониторинг-стек стоит у нас на проде, крутится в докере
+- MongoDB - аналогично. Вполне можно вертеть в докере с примапленным стором.
+- А вот GItlab сервак и свой Docker registry я бы хранил на 2 машинах bare-metal. 1 Машина = 1 сервис. Эти сервера не критика на мой взгляд, поэтому кластер тут избыточен
 
 ## Задача 3
 
@@ -61,6 +64,31 @@ https://hub.docker.com/repository/docker/m1cra/netology#
 - Подключитесь к первому контейнеру с помощью ```docker exec``` и создайте текстовый файл любого содержания в ```/data```;
 - Добавьте еще один файл в папку ```/data``` на хостовой машине;
 - Подключитесь во второй контейнер и отобразите листинг и содержание файлов в ```/data``` контейнера.
+
+
+#### Ответ
+
+```bash
+root@bhdevops:/home/avdeevan/data# docker run  -ti -d -v /home/avdeevan/data:/data centos
+4c27a6ec02fd078b5cd0850f5205e40609f0b7cfa5f281b774e08161fc2fcb8e
+root@bhdevops:/home/avdeevan/data# docker run  -ti -d -v /home/avdeevan/data:/data debian
+d5bd86aee5c723a128c7cef3f0a07f3206322e9c745d0a5f7cba166e89bb52d7
+root@bhdevops:/home/avdeevan/data# docker ps
+CONTAINER ID   IMAGE     COMMAND       CREATED          STATUS         PORTS     NAMES
+d5bd86aee5c7   debian    "bash"        10 seconds ago   Up 9 seconds             distracted_montalcini
+4c27a6ec02fd   centos    "/bin/bash"   6 minutes ago    Up 6 minutes             inspiring_herschel
+root@bhdevops:/home/avdeevan/data# docker exec -ti inspiring_herschel bash
+[root@4c27a6ec02fd /]# cd /data/
+[root@4c27a6ec02fd data]# touch centos_test
+[root@4c27a6ec02fd data]# exit
+root@bhdevops:/home/avdeevan/data# ls
+centos_test  test
+root@bhdevops:/home/avdeevan/data# touch host_test
+root@bhdevops:/home/avdeevan/data# docker exec -ti distracted_montalcini bash
+root@d5bd86aee5c7:/# cd /data/
+root@d5bd86aee5c7:/data# ls
+centos_test  host_test  test
+````
 
 ## Задача 4 (*)
 
