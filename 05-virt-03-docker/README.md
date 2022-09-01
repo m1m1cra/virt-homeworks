@@ -96,6 +96,46 @@ centos_test  host_test  test
 
 Соберите Docker образ с Ansible, загрузите на Docker Hub и пришлите ссылку вместе с остальными ответами к задачам.
 
+#### Ответ
+```bash
+...............................................
+(36/37) Purging libressl3.3-libcrypto (3.3.6-r0)
+(37/37) Purging libmagic (5.40-r1)
+Executing busybox-1.33.1-r8.trigger
+OK: 98 MiB in 69 packages
+Removing intermediate container bc04fdcb2b1b
+ ---> 0cfb5979f90e
+Step 3/5 : RUN  mkdir /ansible &&      mkdir -p /etc/ansible &&      echo 'localhost' > /etc/ansible/hosts
+ ---> Running in a1638d16fb2b
+Removing intermediate container a1638d16fb2b
+ ---> 791b64b62a22
+Step 4/5 : WORKDIR /ansible
+ ---> Running in d4325e2bfd3a
+Removing intermediate container d4325e2bfd3a
+ ---> 9fcadfda649a
+Step 5/5 : CMD  [ "ansible-playbook", "--version" ]
+ ---> Running in 2db1cbb6c249
+Removing intermediate container 2db1cbb6c249
+ ---> af72680f2c25
+Successfully built af72680f2c25
+Successfully tagged m1cra/ansible:2.9.24
+root@bhdevops:/home/avdeevan/m1cra:ansible/ansible#
+root@bhdevops:/home/avdeevan/m1cra:ansible/ansible#
+root@bhdevops:/home/avdeevan/m1cra:ansible/ansible# docker push m1cra/ansible:2.9.24
+The push refers to repository [docker.io/m1cra/ansible]
+2afdbead30d2: Pushed
+75452bb44f99: Pushed
+63493a9ab2d4: Mounted from library/alpine
+2.9.24: digest: sha256:573cdcfb3ea94aca248ce2db982ec23e516f9e6d476e644e24696b0587b57877 size: 947
+root@bhdevops:/home/avdeevan/m1cra:ansible/ansible#
+root@bhdevops:/home/avdeevan/m1cra:ansible/ansible# docker push m1cra/ansible:2.9.24
+The push refers to repository [docker.io/m1cra/ansible]
+2afdbead30d2: Layer already exists
+75452bb44f99: Layer already exists
+63493a9ab2d4: Layer already exists
+2.9.24: digest: sha256:573cdcfb3ea94aca248ce2db982ec23e516f9e6d476e644e24696b0587b57877 size: 947
+root@bhdevops:/home/avdeevan/m1cra:ansible/ansible#
+```
 
 ---
 
