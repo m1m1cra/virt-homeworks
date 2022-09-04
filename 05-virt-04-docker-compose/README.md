@@ -27,7 +27,7 @@
 #### Ответ
 
 <p align="center">
-  <img width="1200" height="600" src="./assets/mynode1.png">
+  <img width="600" height="600" src="./assets/mynode1.png">
 </p>
 
 ## Задача 3
