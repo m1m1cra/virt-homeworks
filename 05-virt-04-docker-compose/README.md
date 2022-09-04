@@ -60,7 +60,7 @@
 
 
 <p align="center">
-  <img width="1200" height="600" src="./assets/prom.png">
+  <img width="1200" height="900" src="./assets/prom.png">
 </p>
 
 
