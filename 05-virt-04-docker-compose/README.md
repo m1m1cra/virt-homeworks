@@ -40,6 +40,14 @@
   <img width="1200" height="600" src="./assets/yc_02.png">
 </p>
 
+#### Ответ
+
+<p align="center">
+  <img width="1200" height="600" src="./assets/working_node.png">
+</p>
+
+
+
 ## Задача 4 (*)
 
 Создать вторую ВМ и подключить её к мониторингу развёрнутому на первом сервере.
