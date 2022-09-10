@@ -26,7 +26,7 @@ docker node ls
 
 
 <p align="center">
-  <img width="1200" height="600" src="./assets/node_ls.png">
+  <img width="1200" height="600" src="./assets/node_ls.pnga">
 </p>
 
 
