@@ -9,8 +9,7 @@
 - Что такое Overlay Network?
 
 #### Ответ
-- Режим replication зависит от того, сколько реплик нативно указано через --replicas, 
-в режиме global сервис запустится на всех нодах кластера
+- В режиме global сервис запустится на всех нодах кластера, в режим replication зависит от того, сколько реплик указано нативно
 - Протокол Raft
 - Это служебная сеть кластера для обмена между нодами, работаюшая поверх текущего транспорта
 
@@ -64,7 +63,7 @@ Swarm updated.
 [root@node01 centos]# systemctl restart docker
 [root@node01 centos]#
 [root@node01 centos]# docker node ls
-Error response from daemon: **Swarm is encrypted and needs to be unlocked before it can be used. Please use "docker swarm unlock" to unlock it.**
+Error response from daemon: Swarm is encrypted and needs to be unlocked before it can be used. Please use "docker swarm unlock" to unlock it.
 [root@node01 centos]#
 [root@node01 centos]# docker swarm unlock
 Please enter unlock key:
