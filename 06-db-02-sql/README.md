@@ -73,8 +73,8 @@ test_db=# \d+ clients
   Column  |     Type     | Collation | Nullable |               Default               | Storage  | Stats target | Description
 ----------+--------------+-----------+----------+-------------------------------------+----------+--------------+-------------
  id       | integer      |           | not null | nextval('clients_id_seq'::regclass) | plain    |              |
- lastname | character(1) |           |          |                                     | extended |              |
- country  | character(1) |           |          |                                     | extended |              |
+ lastname | character(30) |           |          |                                     | extended |              |
+ country  | character(30) |           |          |                                     | extended |              |
  booking  | integer      |           |          |                                     | plain    |              |
 Indexes:
     "clients_pkey" PRIMARY KEY, btree (id)
@@ -92,7 +92,7 @@ test_db=# \d+ orders
  Column |     Type     | Collation | Nullable |              Default               | Storage  | Stats target | Description
 --------+--------------+-----------+----------+------------------------------------+----------+--------------+-------------
  id     | integer      |           | not null | nextval('orders_id_seq'::regclass) | plain    |              |
- name   | character(1) |           |          |                                    | extended |              |
+ name   | character(30) |           |          |                                    | extended |              |
  price  | integer      |           |          |                                    | plain    |              |
 Indexes:
     "orders_pkey" PRIMARY KEY, btree (id)
