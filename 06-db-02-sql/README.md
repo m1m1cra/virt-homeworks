@@ -315,6 +315,101 @@ where c.booking is not null;
 
 Приведите список операций, который вы применяли для бэкапа данных и восстановления. 
 
+#### Ответ
+- Создайте бэкап БД test_db и поместите его в volume, предназначенный для бэкапов (см. Задачу 1).
+```bash
+pg_dump -U alexey -W test_db > /backup/test_db.dump
+```
+- Остановите контейнер с PostgreSQL (но не удаляйте volumes).
+```bash
+CONTAINER ID   IMAGE         COMMAND                  CREATED        STATUS          PORTS                                       NAMES
+bfe6b1dc449e   postgres:12   "docker-entrypoint.s…"   24 hours ago   Up 11 minutes   0.0.0.0:5433->5432/tcp, :::5433->5432/tcp   pg_postgres_1
+root@bhdevops:/home/avdeevan/pg# docker stop pg_postgres_1
+pg_postgres_1
+```
+- Поднимите новый пустой контейнер с PostgreSQL.
+```bash
+root@bhdevops:/home/avdeevan/pg# docker-compose up -d
+Creating pg_postgres_1 ... done
+root@bhdevops:/home/avdeevan/pg# psql -U alexey public  --host 127.0.0.1 --port 5433 -c "SELECT datname FROM pg_database;"
+Password for user alexey:
+  datname
+-----------
+ postgres
+ public
+ template1
+ template0
+(4 rows)
+
+root@bhdevops:/home/avdeevan/pg#
+```
+- Восстановите БД test_db в новом контейнере.
+```bash
+root@bhdevops:/home/avdeevan/pg# psql -U alexey public  --host 127.0.0.1 --port 5433 -c "CREATE DATABASE test_db;"
+Password for user alexey:
+CREATE DATABASE
+```
+
+Остальные команды выполнил в DBeaver в целях удобства, но мог бы выполнить и через -c, как указал выше
+```sql
+create user "test-admin-user";
+create user "test-simple-user";
+GRANT ALL PRIVILEGES ON DATABASE "test_db" to "test-admin-user";
+```
+Ну и само восстановление БД
+```bash
+root@01e37a0014f4:/# psql -U alexey -W test_db < /backup/test_db.dump
+Password:
+SET
+SET
+SET
+SET
+SET
+ set_config
+------------
+
+(1 row)
+
+SET
+SET
+SET
+SET
+SET
+SET
+CREATE TABLE
+ALTER TABLE
+CREATE SEQUENCE
+ALTER TABLE
+ALTER SEQUENCE
+CREATE TABLE
+ALTER TABLE
+CREATE SEQUENCE
+ALTER TABLE
+ALTER SEQUENCE
+ALTER TABLE
+ALTER TABLE
+COPY 5
+COPY 5
+ setval
+--------
+     25
+(1 row)
+
+ setval
+--------
+      5
+(1 row)
+
+ALTER TABLE
+CREATE INDEX
+ALTER TABLE
+GRANT
+GRANT
+GRANT
+GRANT
+```
+
+
 ---
 
 ### Как cдавать задание
