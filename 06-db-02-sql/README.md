@@ -162,6 +162,47 @@ test_db=# SELECT * FROM information_schema.table_privileges where (grantee = 'te
 - приведите в ответе:
     - запросы 
     - результаты их выполнения.
+#### Ответ:
+```bash
+test_db=# select count(*) from clients;
+ count
+-------
+     5
+(1 row)
+
+test_db=# select count(*) from orders;
+ count
+-------
+     5
+(1 row)
+
+test_db=#
+```
+Также, вывожу все записи таблиц:
+```bash
+test_db=# select * from orders;
+ id |                        name                        | price
+----+----------------------------------------------------+-------
+  1 | Шоколад                                            |    10
+  2 | Принтер                                            |  3000
+  3 | Книга                                              |   500
+  4 | Монитор                                            |  7000
+  5 | Гитара                                             |  4000
+(5 rows)
+
+test_db=# select * from clients;
+ id |            lastname            |            country             | booking
+----+--------------------------------+--------------------------------+---------
+ 21 | Иванов Иван Иванович           | USA                            |
+ 22 | Петров Петр Петрович           | Canada                         |
+ 23 | Иоганн Себастьян Бах           | Japan                          |
+ 24 | Ронни Джеймс Дио               | Russia                         |
+ 25 | Ritchie Blackmore              | Russia                         |
+(5 rows)
+
+test_db=#
+```
+
 
 ## Задача 4
 
