@@ -1,16 +1,29 @@
 # Домашнее задание к занятию "6.2. SQL"
-
-## Введение
-
-Перед выполнением задания вы можете ознакомиться с 
-[дополнительными материалами](https://github.com/netology-code/virt-homeworks/tree/master/additional/README.md).
-
 ## Задача 1
 
 Используя docker поднимите инстанс PostgreSQL (версию 12) c 2 volume, 
 в который будут складываться данные БД и бэкапы.
 
 Приведите получившуюся команду или docker-compose манифест.
+
+#### Ответ
+```bash
+root@bhdevops:/home/avdeevan/pg# cat docker-compose.yml
+version: "3.9"
+services:
+  postgres:
+    image: postgres:12
+    environment:
+      POSTGRES_DB: "public"          
+      POSTGRES_USER: "alexey"        #строго в рамках теста, на проде сделаю через .env
+      POSTGRES_PASSWORD: "password"  #строго в рамках теста, на проде сделаю через .env
+      PGDATA: "./data"
+    volumes:
+      - ./data:/data
+      - ./backup:/backup
+    ports:
+      - "5433:5432"
+```
 
 ## Задача 2
 
@@ -37,6 +50,24 @@
 - описание таблиц (describe)
 - SQL-запрос для выдачи списка пользователей с правами над таблицами test_db
 - список пользователей с правами над таблицами test_db
+
+#### Ответ
+- итоговый список БД после выполнения пунктов выше,
+```bash
+test_db=# SELECT datname FROM pg_database;
+  datname
+-----------
+ postgres
+ public
+ template1
+ template0
+ test_db
+(5 rows)
+
+test_db=#
+```
+
+
 
 ## Задача 3
 
