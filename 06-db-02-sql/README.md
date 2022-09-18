@@ -101,7 +101,6 @@ Referenced by:
 Access method: heap
 ```
 - SQL-запрос для выдачи списка пользователей с правами над таблицами test_db
-- 
 ```bash
 SELECT * FROM information_schema.table_privileges
 where (grantee = 'test-simple-user') or (grantee = 'test-admin-user')
