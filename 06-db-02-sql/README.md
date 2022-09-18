@@ -70,21 +70,17 @@ test_db=#
 ```bash
 test_db=# \d+ clients
                                                     Table "public.clients"
-  Column  |     Type     | Collation | Nullable |               Default               | Storage  | Stats target | Description
-----------+--------------+-----------+----------+-------------------------------------+----------+--------------+-------------
- id       | integer      |           | not null | nextval('clients_id_seq'::regclass) | plain    |              |
+  Column  |     Type      | Collation | Nullable |               Default               | Storage  | Stats target | Description
+----------+---------------+-----------+----------+-------------------------------------+----------+--------------+-------------
+ id       | integer       |           | not null | nextval('clients_id_seq'::regclass) | plain    |              |
  lastname | character(30) |           |          |                                     | extended |              |
  country  | character(30) |           |          |                                     | extended |              |
- booking  | integer      |           |          |                                     | plain    |              |
+ booking  | integer       |           |          |                                     | plain    |              |
 Indexes:
-    "clients_pkey" PRIMARY KEY, btree (id)
-    "clients_country_key" UNIQUE CONSTRAINT, btree (country)
-    "indtbcl" UNIQUE, btree (country)
+    "intbcl" btree (country)
 Foreign-key constraints:
     "clients_booking_fkey" FOREIGN KEY (booking) REFERENCES orders(id)
 Access method: heap
-
-
 
 
 test_db=# \d+ orders
