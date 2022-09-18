@@ -66,8 +66,77 @@ test_db=# SELECT datname FROM pg_database;
 
 test_db=#
 ```
+- описание таблиц (describe)
+```bash
+test_db=# \d+ clients
+                                                    Table "public.clients"
+  Column  |     Type     | Collation | Nullable |               Default               | Storage  | Stats target | Description
+----------+--------------+-----------+----------+-------------------------------------+----------+--------------+-------------
+ id       | integer      |           | not null | nextval('clients_id_seq'::regclass) | plain    |              |
+ lastname | character(1) |           |          |                                     | extended |              |
+ country  | character(1) |           |          |                                     | extended |              |
+ booking  | integer      |           |          |                                     | plain    |              |
+Indexes:
+    "clients_pkey" PRIMARY KEY, btree (id)
+    "clients_country_key" UNIQUE CONSTRAINT, btree (country)
+    "indtbcl" UNIQUE, btree (country)
+Foreign-key constraints:
+    "clients_booking_fkey" FOREIGN KEY (booking) REFERENCES orders(id)
+Access method: heap
 
 
+
+
+test_db=# \d+ orders
+                                                   Table "public.orders"
+ Column |     Type     | Collation | Nullable |              Default               | Storage  | Stats target | Description
+--------+--------------+-----------+----------+------------------------------------+----------+--------------+-------------
+ id     | integer      |           | not null | nextval('orders_id_seq'::regclass) | plain    |              |
+ name   | character(1) |           |          |                                    | extended |              |
+ price  | integer      |           |          |                                    | plain    |              |
+Indexes:
+    "orders_pkey" PRIMARY KEY, btree (id)
+Referenced by:
+    TABLE "clients" CONSTRAINT "clients_booking_fkey" FOREIGN KEY (booking) REFERENCES orders(id)
+Access method: heap
+```
+- SQL-запрос для выдачи списка пользователей с правами над таблицами test_db
+- 
+```bash
+SELECT * FROM information_schema.table_privileges
+where (grantee = 'test-simple-user') or (grantee = 'test-admin-user')
+ORDER BY grantee;
+```
+
+- список пользователей с правами над таблицами test_db
+```bash
+test_db=# SELECT * FROM information_schema.table_privileges where (grantee = 'test-simple-user') or (grantee = 'test-admin-user') ORDER BY grantee;
+ grantor |     grantee      | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy
+---------+------------------+---------------+--------------+------------+----------------+--------------+----------------
+ alexey  | test-admin-user  | test_db       | public       | clients    | INSERT         | NO           | NO
+ alexey  | test-admin-user  | test_db       | public       | clients    | SELECT         | NO           | YES
+ alexey  | test-admin-user  | test_db       | public       | clients    | UPDATE         | NO           | NO
+ alexey  | test-admin-user  | test_db       | public       | clients    | DELETE         | NO           | NO
+ alexey  | test-admin-user  | test_db       | public       | clients    | TRUNCATE       | NO           | NO
+ alexey  | test-admin-user  | test_db       | public       | clients    | REFERENCES     | NO           | NO
+ alexey  | test-admin-user  | test_db       | public       | clients    | TRIGGER        | NO           | NO
+ alexey  | test-admin-user  | test_db       | public       | orders     | INSERT         | NO           | NO
+ alexey  | test-admin-user  | test_db       | public       | orders     | SELECT         | NO           | YES
+ alexey  | test-admin-user  | test_db       | public       | orders     | UPDATE         | NO           | NO
+ alexey  | test-admin-user  | test_db       | public       | orders     | DELETE         | NO           | NO
+ alexey  | test-admin-user  | test_db       | public       | orders     | TRUNCATE       | NO           | NO
+ alexey  | test-admin-user  | test_db       | public       | orders     | REFERENCES     | NO           | NO
+ alexey  | test-admin-user  | test_db       | public       | orders     | TRIGGER        | NO           | NO
+ alexey  | test-simple-user | test_db       | public       | orders     | INSERT         | NO           | NO
+ alexey  | test-simple-user | test_db       | public       | clients    | INSERT         | NO           | NO
+ alexey  | test-simple-user | test_db       | public       | clients    | SELECT         | NO           | YES
+ alexey  | test-simple-user | test_db       | public       | clients    | UPDATE         | NO           | NO
+ alexey  | test-simple-user | test_db       | public       | clients    | DELETE         | NO           | NO
+ alexey  | test-simple-user | test_db       | public       | orders     | SELECT         | NO           | YES
+ alexey  | test-simple-user | test_db       | public       | orders     | UPDATE         | NO           | NO
+ alexey  | test-simple-user | test_db       | public       | orders     | DELETE         | NO           | NO
+(22 rows)
+```
 
 ## Задача 3
 
