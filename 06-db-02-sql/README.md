@@ -270,6 +270,38 @@ test_db=#
 (используя директиву EXPLAIN).
 
 Приведите получившийся результат и объясните что значат полученные значения.
+#### Ответ
+```sql
+test_db=# explain  select * from clients c
+where c.booking is not null;
+                        QUERY PLAN
+-----------------------------------------------------------
+ Seq Scan on clients c  (cost=0.00..1.00 rows=1 width=256)
+   Filter: (booking IS NOT NULL)
+(2 rows)
+
+test_db=# explain  analyze select * from clients c
+where c.booking is not null;
+```
+Данная команда позволяет проанализировать скорость выполнения запроса, понять, что необходимо поменять в целях оптимизации
+Seq Scan — последовательное, блок за блоком, чтение данных таблицы clients.
+cost - абстрактная величина, демонстрирующая затратность операции, 1 позиция - время на вывод 1 строки, вторая - всех строк.
+rows — приблизительное количество возвращаемых строк при выполнении операции Seq Scan. Это значение возвращает планировщик.
+width — средний размер одной строки в байтах.
+
+Это вывод планировщика, можем посмотреть реальные данные:
+```sql
+test_db=# explain  (analyze) select * from clients c
+where c.booking is not null;
+                                             QUERY PLAN
+-----------------------------------------------------------------------------------------------------
+ Seq Scan on clients c  (cost=0.00..1.00 rows=1 width=256) (actual time=0.028..0.030 rows=3 loops=1)
+   Filter: (booking IS NOT NULL)
+   Rows Removed by Filter: 2
+ Planning Time: 0.319 ms
+ Execution Time: 0.056 ms
+(5 rows)
+```
 
 ## Задача 6
 
