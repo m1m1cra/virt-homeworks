@@ -24,6 +24,34 @@
 
 В следующих заданиях мы будем продолжать работу с данным контейнером.
 
+#### Ответ
+- Используя команду `\h` получите список управляющих команд.
+```bash
+mysql> status
+--------------
+mysql  Ver 8.0.30 for Linux on x86_64 (MySQL Community Server - GPL)
+
+Connection id:          94
+Current database:
+Current user:           root@localhost
+SSL:                    Not in use
+Current pager:          stdout
+Using outfile:          ''
+Using delimiter:        ;
+Server version:         8.0.30 MySQL Community Server - GPL
+Protocol version:       10
+Connection:             Localhost via UNIX socket
+Server characterset:    utf8mb4
+Db     characterset:    utf8mb4
+Client characterset:    latin1
+Conn.  characterset:    latin1
+UNIX socket:            /var/lib/mysql/mysql.sock
+Binary data as:         Hexadecimal
+Uptime:                 21 min 50 sec
+
+Threads: 5  Questions: 273  Slow queries: 0  Opens: 252  Flush tables: 3  Open tables: 170  Queries per second avg: 0.208
+```
+
 ## Задача 2
 
 Создайте пользователя test в БД c паролем test-pass, используя:
