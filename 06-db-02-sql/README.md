@@ -7,7 +7,7 @@
 Приведите получившуюся команду или docker-compose манифест.
 
 #### Ответ
-```bash
+```yaml
 root@bhdevops:/home/avdeevan/pg# cat docker-compose.yml
 version: "3.9"
 services:
