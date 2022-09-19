@@ -51,7 +51,17 @@ Uptime:                 21 min 50 sec
 
 Threads: 5  Questions: 273  Slow queries: 0  Opens: 252  Flush tables: 3  Open tables: 170  Queries per second avg: 0.208
 ```
+- **Приведите в ответе** количество записей с `price` > 300.
+```sql
+mysql> SELECT * FROM orders WHERE price > 300;
++----+----------------+-------+
+| id | title          | price |
++----+----------------+-------+
+|  2 | My little pony |   500 |
++----+----------------+-------+
+1 row in set (0.00 sec)
 
+```
 ## Задача 2
 
 Создайте пользователя test в БД c паролем test-pass, используя:
