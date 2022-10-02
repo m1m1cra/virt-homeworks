@@ -19,6 +19,9 @@
 -   \l[+]   [PATTERN]      list databases
 -   \c[onnect] {[DBNAME|- USER|- HOST|- PORT|-] | conninfo} connect to new database (currently "public")
 -   \dt[S+] [PATTERN]      list tables
+-   \d[S+]  NAME           describe table, view, sequence, or index
+-   \q
+
 
 
 
