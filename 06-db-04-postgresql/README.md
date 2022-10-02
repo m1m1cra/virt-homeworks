@@ -67,6 +67,38 @@ test_database=#
 
 Можно ли было изначально исключить "ручное" разбиение при проектировании таблицы orders?
 
+#### Ответ
+В связи с тем, что наша таблица orders не является партиционированной, нам придется ее пересоздать, после чего создать 2 партиции (orders_1 и orders_2)
+```sql
+test_database=# alter table orders rename to new_orders;
+ALTER TABLE
+test_database=# create table orders (id integer, title varchar(80), price integer) partition by range(price);
+CREATE TABLE
+test_database=# create table orders_1 partition of orders for values from (0) to (499);
+CREATE TABLE
+test_database=# create table orders_2 partition of orders for values from (499) to (999999999);
+CREATE TABLE
+test_database=# insert into orders (id, title, price) select * from new_orders;
+INSERT 0 8
+test_database=# select * from orders_1;
+ id |        title         | price
+----+----------------------+-------
+  1 | War and peace        |   100
+  3 | Adventure psql time  |   300
+  4 | Server gravity falls |   300
+  5 | Log gossips          |   123
+(4 rows)
+
+test_database=# select * from orders_2;
+ id |       title        | price
+----+--------------------+-------
+  2 | My little database |   500
+  6 | WAL never lies     |   900
+  7 | Me and my bash-pet |   499
+  8 | Dbiezdmin          |   501
+(4 rows)
+```
+
 ## Задача 4
 
 Используя утилиту `pg_dump` создайте бекап БД `test_database`.
