@@ -106,6 +106,20 @@ test_database=# select * from orders_2;
 
 Как бы вы доработали бэкап-файл, чтобы добавить уникальность значения столбца `title` для таблиц `test_database`?
 
+#### Ответ
+Backup создал следующей командой:
+```bash
+pg_dump -U alexey -W test_database > /data/test_database.sql
+```
+для добавления уникальности значения столбца `title` добавил бы ключевое слово UNIQUE после описания столбца при создании таблицы
+```sql
+CREATE TABLE public.new_orders (
+    id integer NOT NULL,
+    title character varying(80) NOT NULL UNIQUE,
+    price integer DEFAULT 0
+);
+```
+
 ---
 
 ### Как cдавать задание
