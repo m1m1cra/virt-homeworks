@@ -16,6 +16,25 @@
 - выхода из psql
 
 #### Ответ
+Создал контейнер через docker-compose-файл:
+```bash
+root@bhdevops:/home/avdeevan/pg# cat docker-compose.yml
+version: "3.9"
+services:
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: "public"
+      POSTGRES_USER: "alexey"
+      POSTGRES_PASSWORD: "password"
+      PGDATA: "./data"
+    volumes:
+      - ./data:/data
+      - ./backup:/backup
+    ports:
+      - "5433:5432"
+```
+
 -   \l[+]   [PATTERN]      list databases
 -   \c[onnect] {[DBNAME|- USER|- HOST|- PORT|-] | conninfo} connect to new database (currently "public")
 -   \dt[S+] [PATTERN]      list tables
