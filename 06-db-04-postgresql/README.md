@@ -42,6 +42,21 @@
 
 **Приведите в ответе** команду, которую вы использовали для вычисления и полученный результат.
 
+#### Ответ:
+```sql
+test_database=# select * from pg_stats where tablename = 'orders' ORDER BY avg_width DESC limit 1;
+ schemaname | tablename | attname | inherited | null_frac | avg_width | n_distinct | most_common_vals | most_common_freqs |                                                                 histogram_bounds                                                                  | correlation | most_common_elems | most_common_
+elem_freqs | elem_count_histogram
+------------+-----------+---------+-----------+-----------+-----------+------------+------------------+-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------+-------------+-------------------+-------------
+-----------+----------------------
+ public     | orders    | title   | f         |         0 |        16 |         -1 |                  |                   | {"Adventure psql time",Dbiezdmin,"Log gossips","Me and my bash-pet","My little database","Server gravity falls","WAL never lies","War and peace"} |  -0.3809524 |                   |
+           |
+(1 row)
+
+test_database=#
+
+```
+
 ## Задача 3
 
 Архитектор и администратор БД выяснили, что ваша таблица orders разрослась до невиданных размеров и
