@@ -15,6 +15,13 @@
 - вывода описания содержимого таблиц
 - выхода из psql
 
+#### Ответ
+-   \l[+]   [PATTERN]      list databases
+-   \c[onnect] {[DBNAME|- USER|- HOST|- PORT|-] | conninfo} connect to new database (currently "public")
+-   \dt[S+] [PATTERN]      list tables
+
+
+
 ## Задача 2
 
 Используя `psql` создайте БД `test_database`.
