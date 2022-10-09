@@ -250,7 +250,7 @@ root@3941133a3792:/usr/share/elasticsearch# curl -XPOST localhost:9200/_snapshot
 {
   "acknowledged" : true
 }
-
+```
 - Создайте индекс `test` с 0 реплик и 1 шардом и **приведите в ответе** список индексов.
 ```bash
 root@3941133a3792:/usr/share/elasticsearch# curl -X PUT localhost:9200/test -H 'Content-Type: application/json' -d'{ "settings": { "number_of_shards": 1,  "number_of_replicas": 0 }}'
