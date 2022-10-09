@@ -261,6 +261,48 @@ green  open   .geoip_databases 8mULwHuiQCCNXcB8fzvEAQ   1   0         40        
 green  open   test             Ui0M2z6mRv6OZYH1ie9dfA   1   0          0            0       226b           226b
 ---
 ```
+- [Создайте `snapshot`](https://www.elastic.co/guide/en/elasticsearch/reference/current/snapshots-take-snapshot.html) состояния кластера `elasticsearch`.
+**Приведите в ответе** список файлов в директории со `snapshot`ами.
+```bash
+root@3941133a3792:/usr/share/elasticsearch# curl -X PUT localhost:9200/_snapshot/netology_backup/elasticsearch?wait_for_completion=true
+{"snapshot":{"snapshot":"elasticsearch","uuid":"4DFehc_vQYmuDm9PKuc6qQ","repository":"netology_backup","version_id":7170699,"version":"7.17.6","indices":[".ds-ilm-history-5-2022.10.09-000001",".geoip_databases",".ds-.logs-deprecation.elasticsearch-default-2022.10.09-000001","test","ind-1"],"data_streams":["ilm-history-5",".logs-deprecation.elasticsearch-default"],"include_global_state":true,"state":"SUCCESS","start_time":"2022-10-09T19:54:30.011Z","start_time_in_millis":1665345270011,"end_time":"2022-10-09T19:54:31.411Z","end_time_in_millis":1665345271411,"duration_in_millis":1400,"failures":[],"shards":{"total":5,"failed":0,"successful":5},"feature_states":[{"feature_name":"geoip","indices":[".geoip_databases"]}]}}root@3941133a3792:/usr/share/elasticsearch#
+root@3941133a3792:/usr/share/elasticsearch# ls -l /usr/share/elasticsearch/snapshots/
+total 48
+-rw-rw-r-- 1 elasticsearch root  1671 Oct  9 19:54 index-0
+-rw-rw-r-- 1 elasticsearch root     8 Oct  9 19:54 index.latest
+drwxrwxr-x 7 elasticsearch root  4096 Oct  9 19:54 indices
+-rw-rw-r-- 1 elasticsearch root 29221 Oct  9 19:54 meta-4DFehc_vQYmuDm9PKuc6qQ.dat
+-rw-rw-r-- 1 elasticsearch root   734 Oct  9 19:54 snap-4DFehc_vQYmuDm9PKuc6qQ.dat
+root@3941133a3792:/usr/share/elasticsearch#
+```
+- Удалите индекс `test` и создайте индекс `test-2`. **Приведите в ответе** список индексов.
+```bash
+root@3941133a3792:/usr/share/elasticsearch# curl -X DELETE 'http://localhost:9200/test?pretty'
+{
+  "acknowledged" : true
+}
+root@3941133a3792:/usr/share/elasticsearch# curl -X PUT localhost:9200/test-2 -H 'Content-Type: application/json' -d'{ "settings": { "number_of_shards": 1,  "number_of_replicas": 0 }}'
+{"acknowledged":true,"shards_acknowledged":true,"index":"test-2"}root@3941133a3792:/usr/share/elasticsearch#
+root@3941133a3792:/usr/share/elasticsearch# curl -X GET 'http://localhost:9200/_cat/indices?v'
+health status index            uuid                   pri rep docs.count docs.deleted store.size pri.store.size
+green  open   test-2           lgn1rbOwQhKGyGoeaSOg9w   1   0          0            0       226b           226b
+green  open   .geoip_databases 8mULwHuiQCCNXcB8fzvEAQ   1   0         40            0     38.4mb         38.4mb
+```
+-[Восстановите](https://www.elastic.co/guide/en/elasticsearch/reference/current/snapshots-restore-snapshot.html) состояние
+кластера `elasticsearch` из `snapshot`, созданного ранее. 
+- **Приведите в ответе** запрос к API восстановления и итоговый список индексов.
+```bash
+curl -X POST localhost:9200/_snapshot/netology_backup/elasticsearch/_restore?pretty -H 'Content-Type: application/json' -d'{"include_global_state":true}'
+{
+  "accepted" : true
+}
+root@3941133a3792:/usr/share/elasticsearch/snapshots# curl -X GET 'http://localhost:9200/_cat/indices?v'
+health status index                     uuid                   pri rep docs.count docs.deleted store.size pri.store.size
+green  open   .geoip_databases          8mULwHuiQCCNXcB8fzvEAQ   1   0         40            0     38.4mb         38.4mb
+green  open   test                      7vb9RTExSjGWjztJYDPg7w   1   0          0            0       226b           226b
+```
+
+
 ### Как cдавать задание
 
 Выполненное домашнее задание пришлите ссылкой на .md-файл в вашем репозитории.
