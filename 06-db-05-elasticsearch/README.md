@@ -29,6 +29,14 @@ FROM elasticsearch:7.17.6
 ADD elasticsearch.yml /usr/share/elasticsearch/config
 RUN mkdir /var/lib/logs && chown elasticsearch:elasticsearch /var/lib/logs && mkdir /var/lib/data && chown elasticsearch:elasticsearch /var/lib/data
 ```
+- Также, прикладываю elasticsearch.yml
+```bash
+cluster.name: "docker-cluster"
+network.host: 0.0.0.0
+node.name: netology_test
+path.data: /var/lib/data
+path.logs: /var/lib/logs
+```
 - ссылку на образ в репозитории dockerhub
 ```html
 https://hub.docker.com/repository/docker/m1cra/elasticsearch
