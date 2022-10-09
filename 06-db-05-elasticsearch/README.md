@@ -102,6 +102,114 @@ https://hub.docker.com/repository/docker/m1cra/elasticsearch
 При проектировании кластера elasticsearch нужно корректно рассчитывать количество реплик и шард,
 иначе возможна потеря данных индексов, вплоть до полной, при деградации системы.
 
+#### Ответ
+- добавьте в `elasticsearch` 3 индекса, в соответствии со таблицей:
+```bash
+curl -X PUT localhost:9200/ind-1 -H 'Content-Type: application/json' -d'{ "settings": { "number_of_shards": 1,  "number_of_replicas": 0 }}'
+curl -X PUT localhost:9200/ind-2 -H 'Content-Type: application/json' -d'{ "settings": { "number_of_shards": 2,  "number_of_replicas": 1 }}'
+curl -X PUT localhost:9200/ind-3 -H 'Content-Type: application/json' -d'{ "settings": { "number_of_shards": 4,  "number_of_replicas": 2 }}'
+```
+- Получите список индексов и их статусов, используя API и **приведите в ответе** на задание.
+```bash
+root@bhdevops:/home/avdeevan/elastic# curl -X GET 'http://localhost:9200/_cat/indices?v'
+health status index            uuid                   pri rep docs.count docs.deleted store.size pri.store.size
+green  open   .geoip_databases H4swznAITWqhc3KRR1DDyQ   1   0         40            0     38.4mb         38.4mb
+green  open   ind-1            DVwsPkbcS3SC2hjDyucqcQ   1   0          0            0       226b           226b
+yellow open   ind-3            euiHBahSSJStKU7AOyqj4g   4   2          0            0       904b           904b
+yellow open   ind-2            3lQahOxFSo2t9zVyo74BvA   2   1          0            0       452b           452b
+root@bhdevops:/home/avdeevan/elastic# curl -X GET 'http://localhost:9200/_cluster/health/ind-1?pretty' && curl -X GET 'http://localhost:9200/_cluster/health/ind-2?pretty' && curl -X GET 'http://localhost:9200/_cluster/health/ind-3?pretty'
+{
+  "cluster_name" : "docker-cluster",
+  "status" : "green",
+  "timed_out" : false,
+  "number_of_nodes" : 1,
+  "number_of_data_nodes" : 1,
+  "active_primary_shards" : 1,
+  "active_shards" : 1,
+  "relocating_shards" : 0,
+  "initializing_shards" : 0,
+  "unassigned_shards" : 0,
+  "delayed_unassigned_shards" : 0,
+  "number_of_pending_tasks" : 0,
+  "number_of_in_flight_fetch" : 0,
+  "task_max_waiting_in_queue_millis" : 0,
+  "active_shards_percent_as_number" : 100.0
+}
+{
+  "cluster_name" : "docker-cluster",
+  "status" : "yellow",
+  "timed_out" : false,
+  "number_of_nodes" : 1,
+  "number_of_data_nodes" : 1,
+  "active_primary_shards" : 2,
+  "active_shards" : 2,
+  "relocating_shards" : 0,
+  "initializing_shards" : 0,
+  "unassigned_shards" : 2,
+  "delayed_unassigned_shards" : 0,
+  "number_of_pending_tasks" : 0,
+  "number_of_in_flight_fetch" : 0,
+  "task_max_waiting_in_queue_millis" : 0,
+  "active_shards_percent_as_number" : 50.0
+}
+{
+  "cluster_name" : "docker-cluster",
+  "status" : "yellow",
+  "timed_out" : false,
+  "number_of_nodes" : 1,
+  "number_of_data_nodes" : 1,
+  "active_primary_shards" : 4,
+  "active_shards" : 4,
+  "relocating_shards" : 0,
+  "initializing_shards" : 0,
+  "unassigned_shards" : 8,
+  "delayed_unassigned_shards" : 0,
+  "number_of_pending_tasks" : 0,
+  "number_of_in_flight_fetch" : 0,
+  "task_max_waiting_in_queue_millis" : 0,
+  "active_shards_percent_as_number" : 50.0
+}
+root@bhdevops:/home/avdeevan/elastic#
+```
+- Получите состояние кластера `elasticsearch`, используя API.
+```bash
+root@bhdevops:/home/avdeevan/elastic# curl -XGET localhost:9200/_cluster/health/?pretty=true
+{
+  "cluster_name" : "docker-cluster",
+  "status" : "yellow",
+  "timed_out" : false,
+  "number_of_nodes" : 1,
+  "number_of_data_nodes" : 1,
+  "active_primary_shards" : 10,
+  "active_shards" : 10,
+  "relocating_shards" : 0,
+  "initializing_shards" : 0,
+  "unassigned_shards" : 10,
+  "delayed_unassigned_shards" : 0,
+  "number_of_pending_tasks" : 0,
+  "number_of_in_flight_fetch" : 0,
+  "task_max_waiting_in_queue_millis" : 0,
+  "active_shards_percent_as_number" : 50.0
+}
+```
+- Как вы думаете, почему часть индексов и кластер находится в состоянии yellow?
+Потому что указанное число реплик отсутствует 
+
+- Удалите все индексы.
+```bash
+root@bhdevops:/home/avdeevan/elastic# curl -X DELETE 'http://localhost:9200/ind-1?pretty' && curl -X DELETE 'http://localhost:9200/ind-2?pretty' && curl -X DELETE 'http://localhost:9200/ind-3?pretty'
+{
+  "acknowledged" : true
+}
+{
+  "acknowledged" : true
+}
+{
+  "acknowledged" : true
+}
+root@bhdevops:/home/avdeevan/elastic#
+```
+
 ## Задача 3
 
 В данном задании вы научитесь:
