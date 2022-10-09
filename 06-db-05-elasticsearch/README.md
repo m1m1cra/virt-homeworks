@@ -252,7 +252,7 @@ root@3941133a3792:/usr/share/elasticsearch# curl -XPOST localhost:9200/_snapshot
 }
 
 - Создайте индекс `test` с 0 реплик и 1 шардом и **приведите в ответе** список индексов.
-```
+```bash
 root@3941133a3792:/usr/share/elasticsearch# curl -X PUT localhost:9200/test -H 'Content-Type: application/json' -d'{ "settings": { "number_of_shards": 1,  "number_of_replicas": 0 }}'
 {"acknowledged":true,"shards_acknowledged":true,"index":"test"}root@3941133a3792:/usr/share/elasticsearch#
 root@3941133a3792:/usr/share/elasticsearch# curl -X GET 'http://localhost:9200/_cat/indices?v'
@@ -260,7 +260,7 @@ health status index            uuid                   pri rep docs.count docs.de
 green  open   .geoip_databases 8mULwHuiQCCNXcB8fzvEAQ   1   0         40            0     38.4mb         38.4mb
 green  open   test             Ui0M2z6mRv6OZYH1ie9dfA   1   0          0            0       226b           226b
 ---
-
+```
 ### Как cдавать задание
 
 Выполненное домашнее задание пришлите ссылкой на .md-файл в вашем репозитории.
