@@ -117,7 +117,9 @@ green  open   .geoip_databases H4swznAITWqhc3KRR1DDyQ   1   0         40        
 green  open   ind-1            DVwsPkbcS3SC2hjDyucqcQ   1   0          0            0       226b           226b
 yellow open   ind-3            euiHBahSSJStKU7AOyqj4g   4   2          0            0       904b           904b
 yellow open   ind-2            3lQahOxFSo2t9zVyo74BvA   2   1          0            0       452b           452b
-root@bhdevops:/home/avdeevan/elastic# curl -X GET 'http://localhost:9200/_cluster/health/ind-1?pretty' && curl -X GET 'http://localhost:9200/_cluster/health/ind-2?pretty' && curl -X GET 'http://localhost:9200/_cluster/health/ind-3?pretty'
+root@bhdevops:/home/avdeevan/elastic# curl -X GET 'http://localhost:9200/_cluster/health/ind-1?pretty' && \ 
+curl -X GET 'http://localhost:9200/_cluster/health/ind-2?pretty' && \ 
+curl -X GET 'http://localhost:9200/_cluster/health/ind-3?pretty'
 {
   "cluster_name" : "docker-cluster",
   "status" : "green",
@@ -193,6 +195,7 @@ root@bhdevops:/home/avdeevan/elastic# curl -XGET localhost:9200/_cluster/health/
 }
 ```
 - Как вы думаете, почему часть индексов и кластер находится в состоянии yellow?
+
 Потому что указанное число реплик отсутствует 
 
 - Удалите все индексы.
@@ -240,6 +243,22 @@ root@bhdevops:/home/avdeevan/elastic#
 Подсказки:
 - возможно вам понадобится доработать `elasticsearch.yml` в части директивы `path.repo` и перезапустить `elasticsearch`
 
+#### Ответ
+Добавил в файл elasticsearch.yml строку path.repo: /usr/share/elasticsearch/snapshots, после чего вызвал api
+```bash
+root@3941133a3792:/usr/share/elasticsearch# curl -XPOST localhost:9200/_snapshot/netology_backup?pretty -H 'Content-Type: application/json' -d'{"type": "fs", "settings": { "location":"/usr/share/elasticsearch/snapshots" }}'
+{
+  "acknowledged" : true
+}
+
+- Создайте индекс `test` с 0 реплик и 1 шардом и **приведите в ответе** список индексов.
+```
+root@3941133a3792:/usr/share/elasticsearch# curl -X PUT localhost:9200/test -H 'Content-Type: application/json' -d'{ "settings": { "number_of_shards": 1,  "number_of_replicas": 0 }}'
+{"acknowledged":true,"shards_acknowledged":true,"index":"test"}root@3941133a3792:/usr/share/elasticsearch#
+root@3941133a3792:/usr/share/elasticsearch# curl -X GET 'http://localhost:9200/_cat/indices?v'
+health status index            uuid                   pri rep docs.count docs.deleted store.size pri.store.size
+green  open   .geoip_databases 8mULwHuiQCCNXcB8fzvEAQ   1   0         40            0     38.4mb         38.4mb
+green  open   test             Ui0M2z6mRv6OZYH1ie9dfA   1   0          0            0       226b           226b
 ---
 
 ### Как cдавать задание
