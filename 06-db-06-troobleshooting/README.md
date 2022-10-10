@@ -69,12 +69,37 @@ test> db.currentOp({"secs_running":{$gte: 5}})
 }
 test>
 ```
-После чего завершу зависший процесс с помощью функции db.killOp(<opId>)
+После чего завершу зависший процесс с помощью функции killOp:
 ```bash
 db.killOp(<opId>)
 ```
 
 - предложите вариант решения проблемы с долгими (зависающими) запросами в MongoDB
+Использую профилирование.
+Сначала посмотрю текущий уровень профилирования:
+```bash
+test> db.getProfilingStatus()
+{ was: 0, slowms: 100, sampleRate: 1, ok: 1 }
+```
+затем найду все медленные запросы, подходящие под профиль (у меня - отсутствуют):
+```bash
+admin> db.system.profile.find({op: {$ne:'command'}}).pretty()
+
+admin>
+```
+при необходимости -  создавам индексы
+```bash
+admin> db.users.getIndexes()
+[ { v: 2, key: { _id: 1 }, name: '_id_' } ]
+admin> db.users.createIndex({title:1})
+title_1
+admin> db.users.getIndexes()
+[
+  { v: 2, key: { _id: 1 }, name: '_id_' },
+  { v: 2, key: { title: 1 }, name: 'title_1' }
+]
+admin>
+```
 
 
 ## Задача 2
