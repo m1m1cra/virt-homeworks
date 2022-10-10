@@ -87,7 +87,7 @@ admin> db.system.profile.find({op: {$ne:'command'}}).pretty()
 
 admin>
 ```
-при необходимости -  создавам индексы
+при необходимости -  создам индексы
 ```bash
 admin> db.users.getIndexes()
 [ { v: 2, key: { _id: 1 }, name: '_id_' } ]
