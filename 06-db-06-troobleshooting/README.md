@@ -11,6 +11,69 @@
 - напишите список операций, которые вы будете производить для остановки запроса пользователя
 - предложите вариант решения проблемы с долгими (зависающими) запросами в MongoDB
 
+#### Ответ
+- Для начала выявлю проблемный запрос с помощью команды db.currentOp({"secs_running":{$gte: 5}})
+```bash
+test> db.currentOp({"secs_running":{$gte: 5}})
+{
+  inprog: [
+    {
+      type: 'op',
+      host: 'c8ac4eaa7003:27017',
+      desc: 'conn6',
+      connectionId: 6,
+      client: '127.0.0.1:49448',
+      appName: 'mongosh 1.6.0',
+      clientMetadata: {
+        driver: { name: 'nodejs|mongosh', version: '4.10.0' },
+        os: {
+          type: 'Linux',
+          name: 'linux',
+          architecture: 'x64',
+          version: '5.15.0-47-generic'
+        },
+        platform: 'Node.js v16.17.0, LE (unified)',
+        version: '4.10.0|1.6.0',
+        application: { name: 'mongosh 1.6.0' }
+      },
+      active: true,
+      currentOpTime: '2022-10-10T13:02:10.689+00:00',
+      threaded: true,
+      opid: 12902,
+      secs_running: Long("9"),
+      microsecs_running: Long("9064259"),
+      op: 'command',
+      ns: 'admin.$cmd',
+      command: {
+        hello: true,
+        maxAwaitTimeMS: 10000,
+        topologyVersion: {
+          processId: ObjectId("634413b9e8ee099508ed0e5a"),
+          counter: Long("0")
+        },
+        '$db': 'admin'
+      },
+      numYields: 0,
+      waitingForLatch: {
+        timestamp: ISODate("2022-10-10T13:02:01.725Z"),
+        captureName: 'AnonymousLatch'
+      },
+      locks: {},
+      waitingForLock: false,
+      lockStats: {},
+      waitingForFlowControl: false,
+      flowControlStats: {}
+    }
+  ],
+  ok: 1
+}
+test>
+```
+После чего завершу зависший процесс с помощью функции db.killOp(<opId>)
+
+- предложите вариант решения проблемы с долгими (зависающими) запросами в MongoDB
+
+
 ## Задача 2
 
 Перед выполнением задания познакомьтесь с документацией по [Redis latency troobleshooting](https://redis.io/topics/latency).
