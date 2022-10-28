@@ -160,11 +160,11 @@ InterfaceError: (InterfaceError) 2013: Lost connection to MySQL server during qu
 Судя по всем, отсутствует доступная оперативная память, из за чего операционная система завершает процессы, утилизирующие память, чтобы предотвратить падение всей системы. Механизм называется OOM Killer.
 Требуется тонко настроить использование памяти postgress'ом с помощью следующих параметров:
 
-max_connections
-shared_buffer
-work_mem
-effective_cache_size
-maintenance_work_mem
+- max_connections
+- shared_buffer
+- work_mem
+- effective_cache_size
+- maintenance_work_mem
 
 Следующая формула поможет определится с верными параметрами
 ```
