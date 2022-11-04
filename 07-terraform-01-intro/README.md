@@ -48,11 +48,11 @@
 4. Конечно, для работы с облаками в целях создания ВМ буду использровать terraform, и ansible для сетапа серверов.
 
 - Какие инструменты из уже используемых вы хотели бы использовать для нового проекта? 
-Packer в части создания образов,
-terraform для создания машин,сетей и т.д в облаках,
-докер и кубер как его оркестрацию,
-Ansbile - да, а вот баш скрипты попытался бы увести в ansible.
-Teamcity - да.
+- Packer в части создания образов,
+- terraform для создания машин,сетей и т.д в облаках,
+- докер и кубер как его оркестрацию,
+- Ansbile - да, а вот баш скрипты попытался бы увести в ansible.
+- Teamcity - да.
 
 ## Задача 2. Установка терраформ. 
 
@@ -60,6 +60,17 @@ Teamcity - да.
 
 Установите терраформ при помощи менеджера пакетов используемого в вашей операционной системе.
 В виде результата этой задачи приложите вывод команды `terraform --version`.
+
+#### Ответ
+```bash
+avdeevan@bhdevops:~$ terraform --version
+Terraform v1.2.8
+on linux_amd64
+
+Your version of Terraform is out of date! The latest version
+is 1.3.4. You can update by downloading from https://www.terraform.io/downloads.html
+avdeevan@bhdevops:~$
+```
 
 ## Задача 3. Поддержка легаси кода. 
 
@@ -71,6 +82,25 @@ Teamcity - да.
 В виде результата этой задачи приложите вывод `--version` двух версий терраформа доступных на вашем компьютере 
 или виртуальной машине.
 
+#### Ответ
+```bash
+avdeevan@bhdevops:~$ terraform --version
+Terraform v1.2.8
+on linux_amd64
+
+Your version of Terraform is out of date! The latest version
+is 1.3.4. You can update by downloading from https://www.terraform.io/downloads.html
+avdeevan@bhdevops:~$
+avdeevan@bhdevops:~$ terraform121 --version
+Terraform v1.2.1
+on linux_386
+
+Your version of Terraform is out of date! The latest version
+is 1.3.4. You can update by downloading from https://www.terraform.io/downloads.html
+avdeevan@bhdevops:~$ terraform134 --version
+Terraform v1.3.4
+on linux_386
+```
 ---
 
 ### Как cдавать задание
